@@ -1,1 +1,48 @@
-<p>libro works!</p>
+<div class="container mt-4">
+    <h1>Libros</h1>
+
+    <div class="d-flex justify-content-center mb-3">
+        <button mat-raised-button color="primary" (click)="abrirModal()">
+            <mat-icon>add</mat-icon> Agregar Libro
+        </button>
+    </div>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="filtroLibro($event)" placeholder="Buscar libro...">
+    </mat-form-field>
+
+    <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+            <ng-container matColumnDef="idLibro">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                <td mat-cell *matCellDef="let l">{{ l.idLibro }}</td>
+            </ng-container>
+            <ng-container matColumnDef="titulo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Titulo</th>
+                <td mat-cell *matCellDef="let l">{{ l.titulo }}</td>
+            </ng-container>
+            <ng-container matColumnDef="editorial">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Editorial</th>
+                <td mat-cell *matCellDef="let l">{{ l.editorial }}</td>
+            </ng-container>
+            <ng-container matColumnDef="edicion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Edicion</th>
+                <td mat-cell *matCellDef="let l">{{ l.edicion }}</td>
+            </ng-container>
+            <ng-container matColumnDef="idioma">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Idioma</th>
+                <td mat-cell *matCellDef="let l">{{ l.idioma }}</td>
+            </ng-container>
+            <ng-container matColumnDef="fechaPublicacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de publicacion</th>
+                <td mat-cell *matCellDef="let l">{{ l.fechapublicacion }}</td>
+            </ng-container>
+            <ng-container matColumnDef="NumEjemplares">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Num de Ejemplares</th>
+                <td mat-cell *matCellDef="let l">{{ l.NumEjemplares }}</td>
+            </ng-container>
+        </table>
+    </div>
+
+</div>
