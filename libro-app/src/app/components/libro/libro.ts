@@ -30,13 +30,15 @@ export class LibroComponent implements OnInit {
   dataSource!: MatTableDataSource<Libro>;
   seleccionarArchivo!: File;
   imagenAnterior: string = "";
+  libroSeleccionado: Libro | null = null;
 
-  mostrarColumnas: string[] = ['idLibro', 'titulo', 'editorial', 'edicion', 'idioma', 'fechapublicacion', 'numEjemplares', 'precio', 'autor', 'categoria', 'acciones'];
+  mostrarColumnas: string[] = ['detalles', 'idLibro', 'titulo', 'editorial', 'edicion', 'idioma', 'fechapublicacion', 'numEjemplares', 'precio', 'autor', 'categoria', 'acciones'];
 
   @ViewChild('formularioLibro') formulariolibro!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('modalLibro') modalLibro!: TemplateRef<any>;
+  @ViewChild('modaldetalles') modalDetalles!: TemplateRef<any>;
 
   constructor(
     private libroService: LibroService,
@@ -194,6 +196,14 @@ export class LibroComponent implements OnInit {
 
   }
 
+  abrirModalDetalles(libro: Libro):void{
+    this.libroSeleccionado = libro;
+    this.dialog.open(this.modalDetalles,{ width: '500px'});
+  }
 
+  cerrarModal(): void{
+    this.dialog.closeAll();
+    this.libroSeleccionado = null;
+  }
 
 }

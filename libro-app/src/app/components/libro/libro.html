@@ -14,6 +14,14 @@
 
     <div class="table-responsive">
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+            <ng-container matColumnDef="detalles">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let l">
+                    <button mat-icon-button color="primary" (click)="abrirModalDetalles(l)">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
             <ng-container matColumnDef="idLibro">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
                 <td mat-cell *matCellDef="let l">{{ l.idLibro }}</td>
@@ -36,7 +44,7 @@
             </ng-container>
             <ng-container matColumnDef="fechaPublicacion">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de publicacion</th>
-                <td mat-cell *matCellDef="let l">{{ l.fechapublicacion }}</td>
+                <td mat-cell *matCellDef="let l">{{ l.fechapublicacion | date: 'yyyy-MM-dd'}}</td>
             </ng-container>
             <ng-container matColumnDef="NumEjemplares">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Num de Ejemplares</th>
@@ -44,15 +52,15 @@
             </ng-container>
             <ng-container matColumnDef="precio">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
-                <td mat-cell *matCellDef="let l">{{ l.precio }}</td>
+                <td mat-cell *matCellDef="let l">{{ l.precio | currency }}</td>
             </ng-container>
             <ng-container matColumnDef="autor">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
-                <td mat-cell *matCellDef="let l">{{ l.autor }}</td>
+                <td mat-cell *matCellDef="let l">{{ nombreCompletoAutor(l.autor) }}</td>
             </ng-container>
             <ng-container matColumnDef="categoria">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
-                <td mat-cell *matCellDef="let l">{{ l.categoria }}</td>
+                <td mat-cell *matCellDef="let l">{{ l.categoria?.categoria }}</td>
             </ng-container>
             <ng-container matColumnDef="acciones">
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
@@ -72,6 +80,7 @@
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
     </div>
+</div>
     <ng-template #modalLibro>
         <mat-dialog-content>
             <h2 mat-dialog-title>{{ editar ? 'Editar Libro' : 'Agregar Libro' }}</h2>
@@ -168,9 +177,22 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-12 mb-2">
-                        <input type="file" (change)="onFileSelected($event)">
-                        <button mat-raised-button color="primary" (click)="subirImagen()">Subir Imagen</button>
-                        <img *ngIf="imagenAnterior" [src]="'http://localhost:8080/' + imagenAnterior " width="120">
+                        <div class="custom-file-update">
+                            <input #fileInput type="file" (change)="onFileSelected($event)" hidden/>
+                            <button mat-raised-button color="primary" (click) = "fileInput.click()" style="margin-right: 10px;">
+                                Seleccionar Imagen
+                            </button>
+                            <span *ngIf="seleccionarArchivo"> {{ seleccionarArchivo.name }} </span>
+                            <button mat-raised-button color="primary" (click)="subirImagen()">Subir Imagen</button>
+                            
+                        </div>
+                        <div class="imagen-container" *ngIf="libro.portada || imagenAnterior">
+                            <img 
+                                [src]="'http://localhost:8080/' + (imagenAnterior || libro.portada)" 
+                                alt="Portada del libro"
+                                class="imagen-portada"
+                            />
+                        </div>
                     </div>
                 </div>
             </form>
@@ -182,4 +204,32 @@
             </button>
         </mat-dialog-actions>
     </ng-template>
-</div>
+
+    <ng-template #modalDetalles let-data>
+        <h2 mat-dialog-title>Detalles del Libro</h2>
+        <mat-dialog-content>
+            <div *ngIf="libroSeleccionado?.portada">
+                <img 
+                    [src]=" 'http://localhost:8080/' + libroSeleccionado?.portada "
+                    alt="Portada del libro"
+                    style="width: 400px; margin-top: 1rem;"
+                />
+            </div>
+            <p><strong>Titulo</strong>{{libroSeleccionado?.titulo}}</p>
+            <p><strong>Editorial:</strong>{{libroSeleccionado?.editorial}}</p>
+            <p><strong>Idioma:</strong>{{libroSeleccionado?.idioma}}</p>
+            <p><strong>Descripción:</strong>{{libroSeleccionado?.descripcion}}</p>
+            <p><strong>Fecha de Publicació:</strong>{{libroSeleccionado?.fechaPublicacion}}</p>
+            <p><strong>Presentación:</strong>{{libroSeleccionado?.presentacion}}</p>
+            <p><strong>Tipo Pasta:</strong>{{libroSeleccionado?.tipoPasta}}</p>
+            <p><strong>Precio:</strong>{{libroSeleccionado?.precio | currency }}</p>
+            <p><strong>ISBN:</strong>{{libroSeleccionado?.iSBN }}</p>
+            <p><strong>Autor:</strong>{{libroSeleccionado?.autor?.nombre }}  {{libroSeleccionado?.autor?.apellido}}</p>
+            <p><strong>Categoria:</strong>{{libroSeleccionado?.categoria?.categoria }}</p>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-button (click)="cerrarModal()">Cerrar</button>
+        </mat-dialog-actions>
+    </ng-template>
+
+
