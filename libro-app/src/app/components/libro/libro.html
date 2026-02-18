@@ -44,11 +44,11 @@
             </ng-container>
             <ng-container matColumnDef="fechaPublicacion">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de publicacion</th>
-                <td mat-cell *matCellDef="let l">{{ l.fechapublicacion | date: 'yyyy-MM-dd'}}</td>
+                <td mat-cell *matCellDef="let l">{{ l.fechaPublicacion | date: 'yyyy-MM-dd'}}</td>
             </ng-container>
-            <ng-container matColumnDef="NumEjemplares">
+            <ng-container matColumnDef="numEjemplares">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Num de Ejemplares</th>
-                <td mat-cell *matCellDef="let l">{{ l.NumEjemplares }}</td>
+                <td mat-cell *matCellDef="let l">{{ l.numEjemplares }}</td>
             </ng-container>
             <ng-container matColumnDef="precio">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
@@ -151,7 +151,7 @@
                     <div class="col-md-4 mb-2">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Presentacion</mat-label>
-                            <input matInput type="number" [(ngModel)] = "libro.presentacion" name="presentacion" required>
+                            <input matInput type="text" [(ngModel)] = "libro.presentacion" name="presentacion" required>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4 mb-2">
@@ -219,7 +219,7 @@
             <p><strong>Editorial:</strong>{{libroSeleccionado?.editorial}}</p>
             <p><strong>Idioma:</strong>{{libroSeleccionado?.idioma}}</p>
             <p><strong>Descripción:</strong>{{libroSeleccionado?.descripcion}}</p>
-            <p><strong>Fecha de Publicació:</strong>{{libroSeleccionado?.fechaPublicacion}}</p>
+            <p><strong>Fecha de Publicación:</strong>{{libroSeleccionado?.fechaPublicacion}}</p>
             <p><strong>Presentación:</strong>{{libroSeleccionado?.presentacion}}</p>
             <p><strong>Tipo Pasta:</strong>{{libroSeleccionado?.tipoPasta}}</p>
             <p><strong>Precio:</strong>{{libroSeleccionado?.precio | currency }}</p>

@@ -32,7 +32,7 @@ export class LibroComponent implements OnInit {
   imagenAnterior: string = "";
   libroSeleccionado: Libro | null = null;
 
-  mostrarColumnas: string[] = ['detalles', 'idLibro', 'titulo', 'editorial', 'edicion', 'idioma', 'fechapublicacion', 'numEjemplares', 'precio', 'autor', 'categoria', 'acciones'];
+  mostrarColumnas: string[] = ['detalles', 'idLibro', 'titulo', 'editorial', 'edicion', 'idioma', 'fechaPublicacion', 'numEjemplares', 'precio', 'autor', 'categoria', 'acciones'];
 
   @ViewChild('formularioLibro') formulariolibro!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -182,14 +182,14 @@ export class LibroComponent implements OnInit {
   }
 
   subirImagen(): void{
-    const fromData = new FormData();
-    fromData.append("file", this.seleccionarArchivo);
+    const formData = new FormData();
+    formData.append("file", this.seleccionarArchivo);
 
     if(this.libro.portada){
-      fromData.append("oldImage", this.libro.portada);
+      formData.append("oldImage", this.libro.portada);
     }
 
-    this.http.post<{ ruta: string }>('http://localhost:8080/api/upload-portada', FormData).subscribe( res =>{
+    this.http.post<{ ruta: string }>('http://localhost:8080/api/upload-portada', formData).subscribe( res =>{
       this.libro.portada = res.ruta;
       this.imagenAnterior = res.ruta;
     });
