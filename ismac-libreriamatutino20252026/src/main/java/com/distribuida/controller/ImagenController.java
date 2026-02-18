@@ -24,8 +24,8 @@ public class ImagenController {
     private static final String UPLOAD_DIR = "uploads/portadas/";
 
     @PostMapping("/upload-portada")
-    public ResponseEntity<Map<String, String>> UploadPortada(
-            @RequestParam("file")MultipartFile file,
+    public ResponseEntity<Map<String, String>> uploadPortada(
+            @RequestParam("file") MultipartFile file,
             @RequestParam(value = "oldImage", required = false) String oldImage
             ){
         try{

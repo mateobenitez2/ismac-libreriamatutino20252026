@@ -26,8 +26,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("*/portadas/**")
-                .addResourceLocations("file:uploads/portadas/*");
+        registry.addResourceHandler("/portadas/**")
+                .addResourceLocations("file:uploads/portadas/");
     }
 
 }

@@ -30,7 +30,7 @@ public class Libro {
     private String idioma;
 
     @Column(name = "fecha_publicacion")
-    private LocalDateTime fechaPublicacion;
+    private Date fechaPublicacion;
 
     @Column(name = "descripcion")
     private String descripcion;
@@ -67,7 +67,7 @@ public class Libro {
     public Libro() {}
 
     public Libro(int idLibro, String titulo, String editorial, int numPaginas, String edicion, String idioma,
-                 LocalDateTime fechaPublicacion,
+                 Date fechaPublicacion,
                  String descripcion, String tipoPasta, String isbn, int numEjemplares, String portada, String presentacion, float precio,
                  Categoria categoria, Autor autor) {
         this.idLibro = idLibro;
@@ -136,11 +136,11 @@ public class Libro {
         this.idioma = idioma;
     }
 
-    public LocalDateTime getFechaPublicacion() {
+    public Date getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(LocalDateTime fechaPublicacion) {
+    public void setFechaPublicacion(Date fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 
@@ -239,7 +239,5 @@ public class Libro {
                 '}';
     }
 
-    public void setFechaPublicacion(Date date) {
 
-    }
 }
